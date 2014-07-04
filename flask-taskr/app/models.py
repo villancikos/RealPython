@@ -25,7 +25,7 @@ class FTasks(db.Model):
 
 class User(db.Model):
 	__tablename__ = 'users'
-
+	
 	id = db.Column(db.Integer, primary_key = True)
 	name = db.Column(db.String, unique = True, nullable = False)
 	email = db.Column(db.String, unique = True, nullable = False)
