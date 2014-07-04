@@ -9,6 +9,9 @@ from sqlalchemy.exc import IntegrityError
 
 mod = Blueprint('users', __name__, url_prefix='/users',
 					template_folder='templates', static_folder='static')
+
+# mod = Blueprint('users', __name__)
+
 @mod.route('/logout/')
 def logout():
 	session.pop('logged_in',None)

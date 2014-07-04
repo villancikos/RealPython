@@ -6,7 +6,10 @@ from app.views import login_required, flash_errors
 from forms import AddTask
 from app.models import FTasks
 
-mod = Blueprint('tasks', __name__, url_prefix='/tasks', template_folder='templates', static_folder='static')
+mod = Blueprint('tasks', __name__, url_prefix='/tasks', 
+	template_folder='templates', static_folder='static')
+
+# mod = Blueprint('tasks',__name__)
 
 @mod.route('/tasks/')
 @login_required
