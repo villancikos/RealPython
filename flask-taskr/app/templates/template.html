@@ -26,9 +26,9 @@
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 						{% if not session.logged_in %}
-						<li><a href="/register">Signup</a></li>
+						<li><a href="{{url_for('users.register')}}">Signup</a></li>
 						{% else %}
-						<li><a href="/logout">Logout</a></li>
+						<li><a href="{{url_for('users.logout')}}">Logout</a></li>
 						{% endif %}
 					</ul>
 				</div><!--/.nav collapse -->
@@ -42,9 +42,9 @@
 				{% endfor %}
 				{% if error %}
 					<p class="error"><strong>Error:</strong> {{ error }}</p>
-					{% endif %}
-					{% block content %}
-					{% endblock %}
+				{% endif %}
+				{% block content %}
+				{% endblock %}
 			</div>
 			<div class="footer">
 				<hr>

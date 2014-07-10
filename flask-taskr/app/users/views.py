@@ -33,7 +33,7 @@ def login():
 			flash('You are logged in. Go crazy!')
 			return redirect(url_for('tasks.tasks'))
 
-	return render_template('users/login.html',
+	return render_template("users/login.html",
 							form = LoginForm(request.form),
 							error = error)
 
@@ -50,10 +50,10 @@ def register():
 		try:
 			db.session.add(new_user)
 			db.session.commit()
-			flash('Thanks for registering. Please Login to continue.')
+			flash('Thanks for registering. Please Login.')
 			return redirect(url_for('.login'))
 		except IntegrityError:
 			error = "Oh nopes! That username and/or email already exists. Try Again!"
 	else:
 		flash_errors(form)
-	return render_template('/users/register.html', form = form , error = error)
+	return render_template('/users/register.html', form=form , error=error)

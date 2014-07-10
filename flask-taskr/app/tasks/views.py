@@ -11,12 +11,15 @@ mod = Blueprint('tasks', __name__, url_prefix='/tasks',
 
 # mod = Blueprint('tasks',__name__)
 
+
 @mod.route('/tasks/')
 @login_required
 def tasks():
 	open_tasks = db.session.query(FTasks).filter_by(status = '1').order_by(FTasks.due_date.asc())
 	closed_tasks = db.session.query(FTasks).filter_by(status = '0').order_by(FTasks.due_date.asc())
 	return render_template('tasks/tasks.html', form= AddTask(request.form), open_tasks=open_tasks,closed_tasks=closed_tasks)
+
+
 
 @mod.route('/add/', methods=['GET','POST'])
 @login_required
@@ -25,7 +28,7 @@ def new_task():
 	if form.validate_on_submit():
 		new_task = FTasks(
 			form.name.data,
-			form.due_date,
+			form.due_date.data,
 			form.priority.data,
 			form.posted_date.data,
 			'1',
@@ -38,6 +41,7 @@ def new_task():
 		flash_errors(form)
 	return redirect(url_for('.tasks'))
 
+
 @mod.route('/complete/<int:task_id>/',)
 @login_required
 def complete(task_id):
@@ -46,6 +50,7 @@ def complete(task_id):
 	db.session.commit()
 	flash('The task was marked as complete. Nice.')
 	return redirect(url_for('.tasks'))
+
 
 @mod.route('/delete/<int:task_id>/',)
 @login_required
@@ -56,10 +61,8 @@ def delete_entry(task_id):
 	flash('The task was deleted. Why not add a new one?')
 	return redirect(url_for('.tasks'))
 
-# @mod.route('/task/<int:task_id>/',)
-# @login_required
-# def display_task(task_id):
-# 	new_id = task_id
-# 	db.session.query(FTasks).filter_by(task_id = new_id)
-# 	flash('The task was deleted. Why not add a new one?')
-# 	return render_template('task.html',task = task)
+@mod.route('/task/<int:task_id>/',)
+@login_required
+def display_task(task_id):
+	task = db.session.query(FTasks).filter_by(task_id = task_id)
+	return render_template('tasks/task.html',task = task)

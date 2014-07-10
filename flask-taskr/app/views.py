@@ -16,7 +16,7 @@ def login_required(test):
 		else:
 			flash('You need to login first.')
 			return redirect(url_for('users.login'))
-		return wrap
+	return wrap
 
 @app.errorhandler(500)
 def internal_error(error):
@@ -25,7 +25,8 @@ def internal_error(error):
 
 @app.errorhandler(404)
 def internal_error(error):
-	return render_template('404.html'),404
+	db.session.rollback()
+	return render_template('404.html'), 404
 
 @app.route('/', defaults={'page':'index'})
 def index(page):
